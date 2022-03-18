@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { toast } from 'react-toastify'
 import { FaUser } from 'react-icons/fa'
+import { useSelector, useDispatch } from 'react-redux'
+import { register } from '../features/auth/authSlice'
 
 function Register() {
   const [ formData, setFormData ] = useState({
@@ -10,6 +12,10 @@ function Register() {
     password2: ''
   })
    const {name, email, password, password2 } = formData
+
+   const dispatch = useDispatch()
+
+   const {user, isLoading, isSuccess, message} = useSelector(state => state.auth)
 
    const onChange = (e) => {
      setFormData((prevState) => ({
@@ -22,6 +28,13 @@ function Register() {
       e.preventDefault()
       if(password !== password2){
         toast.error('Password Do not match')
+      } else{
+        const userData = {
+          name,
+          email,
+          password
+        }
+        dispatch(register(userData))
       }
    }
 
@@ -31,6 +44,7 @@ function Register() {
       <h6>
         <FaUser /> Register
       </h6>
+      
      </section>
      <section>
        <form onSubmit={onSubmit}>
@@ -45,12 +59,12 @@ function Register() {
              placeholder='Enter Your Email' required />
           </div>
            <div className="form-group">
-            <input type="text" id='password' className="form-control"
+            <input type="password" id='password' className="form-control"
             value={password} onChange={onChange} name='password'
              placeholder='Enter Your Password' required />
           </div>
            <div className="form-group">
-            <input type="text" id='password2' className="form-control"
+            <input type="password" id='password2' className="form-control"
             value={password2} onChange={onChange} required
             placeholder='Confirm Password' name='password2' />
           </div>
