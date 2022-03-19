@@ -21,7 +21,7 @@ app.use(express.urlencoded({extended: false}))
 
 
 //Routes
-app.use('/user', usersRoutes)
+app.use('/api/user', usersRoutes)
 
 
 app.use(errorHandler);
