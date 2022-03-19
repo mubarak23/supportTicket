@@ -5,7 +5,7 @@ const dotenv = require('dotenv').config()
 const connectDb = require('./config/db')
 const usersRoutes = require('./routes/users')
 const { errorHandler } = require('./middleware/errorMiddleware')
-
+const ticketRoutes = require('./routes/tickets')
 
 const PORT = process.env.PORT || 5051
 
@@ -22,6 +22,8 @@ app.use(express.urlencoded({extended: false}))
 
 //Routes
 app.use('/api/user', usersRoutes)
+app.use('/api/ticket', ticketRoutes)
+
 
 
 app.use(errorHandler);
