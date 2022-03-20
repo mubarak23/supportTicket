@@ -1,3 +1,4 @@
+/* eslint-disable no-sequences */
 /* eslint-disable no-unused-expressions */
 import { createSlice, createAsyncThunk  } from '@reduxjs/toolkit'
 import authService from './authService'

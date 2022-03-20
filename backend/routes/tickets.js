@@ -1,6 +1,6 @@
 const express = require("express");
 const { protected } = require("../middleware/authMiddlware.js");
-const { getTickets, createTicket, getTicket, deleteTicket } = require("../controllers/ticketController");
+const { getTickets, createTicket, getTicket, deleteTicket, updateTicket  } = require("../controllers/ticketController");
 const router = express();
 
 router.route("/")
@@ -10,4 +10,5 @@ router.route("/")
 router.route('/:id')
 .get( protected, getTicket)
 .delete(protected, deleteTicket)
+.put(protected, updateTicket)
 module.exports = router;

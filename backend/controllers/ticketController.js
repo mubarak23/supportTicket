@@ -71,7 +71,6 @@ const createTicket = asyncHandler(async (req, res) => {
 // @Route DELETE /api/tickets/:id
 // @Access Protected
 const deleteTicket = asyncHandler(async (req, res) => {
-  console.log(req.user.id);
     const user = await User.findById(req.user.id)
     if(!user){
       res.status(401)
@@ -88,13 +87,38 @@ const deleteTicket = asyncHandler(async (req, res) => {
   }
   await ticket.remove()
 
-  res.status(201).json({success: true});
+  res.status(200).json({success: true});
 })
+
+// @Desc Update a Ticket 
+// @Route PATCH /api/tickets/:id
+// @Access Protected
+const updateTicket = asyncHandler(async (req, res) => {
+  
+    const user = await User.findById(req.user.id)
+    if(!user){
+      res.status(401)
+      throw new Error('User not Found')
+    }
+  const ticket = await Ticket.findById(req.params.id)
+  if(!ticket){
+    res.status(404)
+    throw new Error('Ticket Not Found')
+  }  
+  if(ticket.user.toString() !== req.user.id){
+    res.status(401)
+    throw new Error('Not Authorized')
+  }
+  const updatedTicket = await Ticket.findByIdAndUpdate(req.params.id, req.body, {new: true})
+    res.status(200).json(updatedTicket);
+})
+
 
 
 module.exports = {
   getTickets,
   createTicket,
   getTicket,
-  deleteTicket
+  deleteTicket,
+  updateTicket
 };
