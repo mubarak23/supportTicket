@@ -9,7 +9,7 @@ import { createTicket, reset} from '../features/ticket/ticketSlice'
 function NewTicket() {
   const { user } = useSelector((state) => state.auth)
 
-  const { isLoading, isError, isSuccess, message } = useSelector((state) => state.ticket)
+  const { isLoading, isError, isSuccess, message } = useSelector((state) => state.tickets)
 
   const [ name ] = useState(user.name)
   const [ email ] = useState(user.email)
@@ -19,6 +19,14 @@ function NewTicket() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
+    useEffect(() => {
+    return () => {
+    if(isSuccess){
+      dispatch(reset)
+    }
+  }
+  },[dispatch, isSuccess])
+  
   useEffect(() => {
     if(isError){
       toast.error(message)
@@ -62,8 +70,9 @@ function NewTicket() {
           <select name="product" id="product" value={product}
            onChange={(e) => setProduct(e.target.value)} className="form-control">
             <option value="iPad">iPad</option>
-            <option value="iPhone">iPhone</option>
-            <option value="Macbook Pro">Macbook Pro</option>
+            <option value="iPhone">iPhone</option> 
+            <option value="MacBook Pro">MacBook Pro</option>
+            <option value="iMac">iMac</option>
           </select>
         </div>
         <div className="form-group">

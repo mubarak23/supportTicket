@@ -3,7 +3,7 @@ import { FaArrowAltCircleLeft } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 function BackButton({url}) {
   return (
-    <Link to={url}> <button className="btn btn-reverse btn-block">
+    <Link to={url}> <button className="btn btn-reverse btn-sm">
       <FaArrowAltCircleLeft /> Back
       </button></Link>
   )

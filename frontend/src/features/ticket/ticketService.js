@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-const API_URL = "/api/ticket";
+const API_URL = "/api/ticket/";
 
 
 //create User Ticket
@@ -26,9 +26,22 @@ const getAllUserTickets = async (token) => {
   return response.data;
 };
 
+// Get Ticket
+const getTicket = async ( ticketId, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  const response = await axios.get(API_URL + ticketId, config);
+  return response.data;
+};
+
+
 const ticketService = {
   createTicket,
   getAllUserTickets,
+  getTicket
 };
 
 export default ticketService

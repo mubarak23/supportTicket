@@ -1,6 +1,8 @@
 import {useEffect} from 'react'
 import { useSelector, useDispatch} from 'react-redux'
 import Spinner from '../components/Spinner'
+import BackButton from '../components/BackButton'
+import TicketItem from '../components/TicketItem'
 import { getAllTickets, reset } from '../features/ticket/ticketSlice'
 
 function Tickets() {
@@ -8,10 +10,12 @@ function Tickets() {
   
   const dispatch = useDispatch()
 
-  useEffect((state) => {
+  useEffect(() => {
+    return () => {
     if(isSuccess){
       dispatch(reset)
     }
+  }
   },[dispatch, isSuccess])
 
   useEffect(() => {
@@ -24,9 +28,21 @@ function Tickets() {
   }
 
   return (
-    <div>
+    <>
+    <BackButton url='/' />
       <h3>List of User Tickets</h3>
-    </div>
+      <div className="tickets">
+        <div className="ticket-headings">
+          <div>Date</div>
+          <div>Product</div>
+          <div>Status</div>
+          <div>Action</div>
+        </div>
+        {tickets.map((ticket) => (
+          <TicketItem  key={ticket._id} ticket={ticket}/>
+        ))}
+      </div>
+    </>
   )
 }
 

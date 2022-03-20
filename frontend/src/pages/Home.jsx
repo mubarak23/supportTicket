@@ -6,7 +6,7 @@ function Home() {
     <>
       <h2>What Do You Need Help with</h2>
       <p>Please Select an Option Below</p>
-      <Link to='/new-ticket' className='btn btn-reverse btn-block'>
+      <Link to='/newTicket' className='btn btn-reverse btn-block'>
         <FaQuestionCircle />Create new Ticket
       </Link>
       <Link to='/tickets' className='btn btn-block'>

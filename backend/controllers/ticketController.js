@@ -8,7 +8,7 @@ const Ticket = require('../models/ticketModel')
 const getTickets = asyncHandler(async (req, res) => {
     // get user id from the protected middleware
     const user = await User.findById(req.user.id)
-    console.log(req.user.id)
+    
     if(!user){
       res.status(401)
       throw new Error('User not Found')
@@ -21,7 +21,7 @@ const getTickets = asyncHandler(async (req, res) => {
 // @Route GET /api/tickets/:id
 // @Access Protected
 const getTicket = asyncHandler(async (req, res) => {
-  console.log(req.user.id);
+  
     const user = await User.findById(req.user.id)
     if(!user){
       res.status(401)
@@ -36,7 +36,7 @@ const getTicket = asyncHandler(async (req, res) => {
     res.status(401)
     throw new Error('Not Authorized')
   }
-  res.status(201).json(ticket);
+  res.status(200).json(ticket);
 })
 
 

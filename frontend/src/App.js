@@ -8,6 +8,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import NewTicket from './pages/NewTicket';
 import Tickets from './pages/Tickets';
+import Ticket from './pages/Ticket';
 
 
 function App() {
@@ -20,11 +21,14 @@ function App() {
             <Route path='/' element={<Home />} />
             <Route path='/register' element={<Register />} />
             <Route path='/login' element={<Login />} />
-            <Route path='/new-ticket' element={<PrivateRoute />}>
-              <Route path='/new-ticket' element={<NewTicket />} />
-            </Route>
             <Route path='/tickets' element={<PrivateRoute />}>
               <Route path='/tickets' element={<Tickets />} />
+            </Route>
+            <Route path='/newTicket' exact element={<PrivateRoute />}>
+              <Route path='/newTicket' exact element={<NewTicket />} />
+            </Route>
+            <Route path='/ticket/:ticketId' exact element={<PrivateRoute />}>
+              <Route path='/ticket/:ticketId' exact element={<Ticket />} />
             </Route>
           </Routes>
         </div>

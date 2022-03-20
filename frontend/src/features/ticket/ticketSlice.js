@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import ticketService from "./ticketService";
 
@@ -31,8 +32,23 @@ export const getAllTickets = createAsyncThunk('/ticket/getAll',
   async(_, thunkAPI) => {
     try{
       const token = thunkAPI.getState().auth.user.token
-      console.log(token)
+      
       return await ticketService.getAllUserTickets(token);
+    }catch(error){
+      const message = (error.response && error.response.data
+         && error.response.data.message) || error.message || error.toString()
+         return thunkAPI.rejectWithValue(message)
+    }
+  }
+)
+
+// Get Single Ticket Details
+export const getTicket = createAsyncThunk('/ticket/get',
+  async(ticketId, thunkAPI) => {
+    try{
+      const token = thunkAPI.getState().auth.user.token
+      
+      return await ticketService.getTicket(ticketId, token);
     }catch(error){
       const message = (error.response && error.response.data
          && error.response.data.message) || error.message || error.toString()
@@ -46,7 +62,14 @@ export const ticketSlice = createSlice({
   name: 'ticket',
   initialState,
   reducers: {
-    reset: (state) => initialState
+    reset: (state) => {
+      state.isLoading = false
+      state.isError = false
+      state.isSuccess = false
+      state.message = ''
+      state.tickets = []
+      state.ticket = {}
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -70,9 +93,22 @@ export const ticketSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.message = action.payload;
-        state.tickets = action.payload
+        state.tickets = action.payload;
       })
       .addCase(getAllTickets.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(getTicket.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getTicket.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.ticket = action.payload;
+      })
+      .addCase(getTicket.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
