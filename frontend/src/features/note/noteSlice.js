@@ -15,7 +15,7 @@ const initialState = {
 
 
 // Get All Ticket Notes
-export const getAllTicketNotes = createAsyncThunk('/notes/getAll',
+export const getTicketNotes = createAsyncThunk('/notes/getAll',
   async(ticketId, thunkAPI) => {
     try{
       const token = thunkAPI.getState().auth.user.token
@@ -38,15 +38,15 @@ export const noteSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getAllTicketNotes.pending, (state) => {
+      .addCase(getTicketNotes.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(getAllTicketNotes.fulfilled, (state, action) => {
+      .addCase(getTicketNotes.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
         state.notes = action.payload;
       })
-      .addCase(getAllTicketNotes.rejected, (state, action) => {
+      .addCase(getTicketNotes.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;

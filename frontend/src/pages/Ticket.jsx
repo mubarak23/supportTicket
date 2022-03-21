@@ -5,10 +5,14 @@ import { toast } from 'react-toastify'
 import { useParams } from 'react-router'
 import Spinner from '../components/Spinner'
 import BackButton from '../components/BackButton'
+import NoteItem from '../components/NoteItem'
 import { getTicket, closeTicket } from '../features/ticket/ticketSlice'
+import {getTicketNotes, reset as noteReset } from '../features/note/noteSlice'
 
 function Ticket() {
   const { ticket, isLoading, isError, message } = useSelector((state) => state.tickets)
+
+  const { notes, isLoading: notesIsLoading } = useSelector((state) => state.notes)
   
   const { ticketId } = useParams()
 
@@ -35,6 +39,7 @@ const onTicketClosed = () => {
       toast.error(message)
     }
     dispatch(getTicket(ticketId))
+    dispatch(getTicketNotes(ticketId))
     
   }, [isError, ticketId, message]) // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -64,6 +69,10 @@ const onTicketClosed = () => {
         <p>{ticket.description}</p>
       </div>
     </header>
+    <h4>Ticket Notes </h4>
+    {notes.map((note) => (
+      <NoteItem key={note._id} note={note} />
+    ))}
     {ticket.status !== 'closed' && 
     ( <button className="btn btn-block btn-danger" onClick={onTicketClosed}> Closed Ticket</button> )}
     </div>
