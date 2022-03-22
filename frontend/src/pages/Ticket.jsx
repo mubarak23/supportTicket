@@ -9,7 +9,7 @@ import Spinner from '../components/Spinner'
 import BackButton from '../components/BackButton'
 import NoteItem from '../components/NoteItem'
 import { getTicket, closeTicket } from '../features/ticket/ticketSlice'
-import {getTicketNotes, reset as noteReset } from '../features/note/noteSlice'
+import {getTicketNotes, createNotes, reset as noteReset } from '../features/note/noteSlice'
 
 const customStyle = {
   content: {
@@ -55,7 +55,8 @@ const closeModal = () => setModalIsOpen(false)
 // hANDLE SUBMIT nOTE
 const handSubmitNote =(e) => {
   e.preventDefault()
-  console.log('Submit')
+  dispatch(createNotes({ticketId, noteText}))
+  closeModal()
 }
 
   // useEffect(() => {
