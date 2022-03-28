@@ -95,5 +95,4 @@ Endpoint - Put: '/api/ticket/:ticketId'
 }
 
 
-### `npm start`
 
